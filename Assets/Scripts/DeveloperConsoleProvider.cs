@@ -14,6 +14,7 @@ namespace Developer
         [SerializeField] private KeyCode keyToOpenClose = KeyCode.Tilde;
         [Space]
         [SerializeField] private List<ConsoleModule> modules = new List<ConsoleModule>();
+        [SerializeField] private bool autoConnectModules = true;
         
         [Header("UI")]
         [SerializeField] private GameObject mainUI;
@@ -22,9 +23,19 @@ namespace Developer
 
         private bool isOpened = false;
 
+        private List<string> lastCommands = new List<string>();
+        private int lastCommandIndex = 0;
+
+        private void Awake()
+        {
+            if(autoConnectModules)
+                modules.AddRange(FindObjectsOfType<ConsoleModule>());
+        }
+
         private void Update()
         {
             OpenCloseConsole();
+            RestoreCommands();
 
             if (Input.GetKeyDown(KeyCode.Return) && inputField.text.Length > 0)
                 ExecuteCommand(inputField.text);
@@ -51,6 +62,8 @@ namespace Developer
         public void ExecuteCommand (string c)
         {
             Print(c);
+            AddLastCommand(c.Trim());
+            lastCommandIndex = lastCommands.Count;
 
             List<string> words = new List<string>();
             words.AddRange(c.Trim().Split(' '));
@@ -76,8 +89,17 @@ namespace Developer
 
             if (!correctCommand)
             {
-                Print($"<color=red>{CommandResults.WRONG_COMMAND_MESS}</color>");
+                PrintError(CommandResults.WRONG_COMMAND_MESS);
                 return;
+            }
+
+            if (module.arguments > 0)
+            {
+                if(words.Count != module.arguments)
+                {
+                    PrintError(CommandResults.WRONG_ARGS_MESS);
+                    return;
+                }
             }
 
             string executionResult = "";
@@ -85,8 +107,54 @@ namespace Developer
 
             if(!exectuedCorrectly)
             {
-                Print($"<color=red>{executionResult}</color>");
+                PrintError(executionResult);
                 return;
+            }
+            else if (exectuedCorrectly && !string.IsNullOrEmpty(executionResult))
+            {
+                Print(executionResult);
+                return;
+            }
+        }
+
+        private void AddLastCommand (string command)
+        {
+            lastCommands.Add(command);
+        }
+
+        private void RestoreCommands ()
+        {
+            if (lastCommands.Count > 0)
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    if (lastCommandIndex <= 0)
+                    {
+                        lastCommandIndex = 0;
+                    }
+                    else
+                    {
+                        lastCommandIndex--;
+                    }
+
+                    inputField.text = lastCommands[lastCommandIndex];
+                    inputField.MoveTextEnd(false);
+                }
+
+                if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    if (lastCommandIndex >= lastCommands.Count - 1)
+                    {
+                        lastCommandIndex = lastCommands.Count - 1;
+                    }
+                    else
+                    {
+                        lastCommandIndex++;
+                    }
+
+                    inputField.text = lastCommands[lastCommandIndex];
+                    inputField.MoveTextEnd(false);
+                }
             }
         }
 
@@ -101,5 +169,17 @@ namespace Developer
         /// </summary>
         /// <param name="message"></param>
         public void Print(string message) => buffer.text += "\n" + message;
+
+        /// <summary>
+        /// Prints given value as error.
+        /// </summary>
+        /// <param name="message"></param>
+        public void PrintError(string message) => buffer.text += $"\n<color=red>{message}</color>";
+
+        /// <summary>
+        /// Prints given value as warning.
+        /// </summary>
+        /// <param name="message"></param>
+        public void PrintWarning(string message) => buffer.text += $"\n<color=yellow>{message}</color>";
     }
 }

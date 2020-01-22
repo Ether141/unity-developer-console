@@ -2,10 +2,10 @@
 {
     public class Echo : ConsoleModule
     {
-        public Echo ()
+        private void Awake ()
         {
             command = "echo";
-            arguments = 9999;
+            arguments = -1;
         }
 
         public override bool ExecuteCommand(DeveloperConsoleProvider host, ref string result, string[] arguments)
