@@ -9,6 +9,7 @@
 - Commands suggestion
 - Possibility to save logs from console to file
 - Aliases
+- By down and up arrow on keyboard, you can review recently executed commands
 
 ![alt err](https://images92.fotosik.pl/309/a654db0808a3f3d1.jpg)
 
