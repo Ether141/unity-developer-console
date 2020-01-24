@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Developer Console for Unity - 2020
+ * Main class
+ */
+
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -14,7 +19,10 @@ namespace Developer
     public class DeveloperConsoleProvider : MonoBehaviour
     {
         [Header("Main settings")]
-        [SerializeField] private KeyCode keyToOpenClose = KeyCode.Tilde;
+                         public bool isConsoleAllowed = true;
+        [SerializeField] private bool multiConsolesAllowed = false;
+        [Space]
+        [SerializeField] private KeyCode keyToOpenClose = KeyCode.F2;
         [Space]
         [SerializeField] private List<ConsoleModule> modules = new List<ConsoleModule>();
         [SerializeField] private List<Alias> aliases = new List<Alias>();
@@ -43,8 +51,32 @@ namespace Developer
         private List<string> lastCommands = new List<string>();
         private int lastCommandIndex = 0;
 
+        /// <summary>
+        /// Current instance of console on scene (if more than one console is allowed, returns null).
+        /// </summary>
+        public static DeveloperConsoleProvider Current { get; private set; }
+
         private void Start()
         {
+            if(!isConsoleAllowed)
+            {
+                mainUI.SetActive(false);
+                Destroy(gameObject);
+            }
+
+            if(!multiConsolesAllowed)
+            {
+                if(Current != null)
+                {
+                    mainUI.SetActive(false);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    Current = this;
+                }
+            }
+
             if(autoConnectModules)
                 modules.AddRange(FindObjectsOfType<ConsoleModule>());
 
@@ -301,7 +333,7 @@ namespace Developer
         }
 
         /// <summary>
-        /// Return true if given alias exists in aliases list.
+        /// Returns true if given alias exists in aliases list.
         /// </summary>
         /// <param name="aliasToCheck"></param>
         /// <returns></returns>

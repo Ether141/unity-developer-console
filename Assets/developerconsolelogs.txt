@@ -1,0 +1,23 @@
+24.01.2020 20:02:55: echo Hello, World!
+24.01.2020 20:02:55: Hello, World! 
+24.01.2020 20:03:00: system_info
+24.01.2020 20:03:00: Current computer informations:
+24.01.2020 20:03:00: Graphics card: NVIDIA GeForce GTX 970
+24.01.2020 20:03:00: Processor: Intel(R) Core(TM) i3-8100 CPU @ 3.60GHz
+24.01.2020 20:03:00: RAM: 16326 MB
+24.01.2020 20:03:00: Operating system: Windows 10  (10.0.0) 64bit
+ 
+24.01.2020 20:03:04: cls
+24.01.2020 20:03:07: system_info
+24.01.2020 20:03:07: Current computer informations:
+24.01.2020 20:03:07: Graphics card: NVIDIA GeForce GTX 970
+24.01.2020 20:03:07: Processor: Intel(R) Core(TM) i3-8100 CPU @ 3.60GHz
+24.01.2020 20:03:07: RAM: 16326 MB
+24.01.2020 20:03:07: Operating system: Windows 10  (10.0.0) 64bit
+ 
+24.01.2020 20:03:09: echo Hello, World!
+24.01.2020 20:03:09: Hello, World! 
+24.01.2020 20:03:31: wrong
+24.01.2020 20:03:31: This command is not recognized!
+24.01.2020 20:03:38: set_money 100
+24.01.2020 20:03:40: save_logs
