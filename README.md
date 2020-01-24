@@ -10,7 +10,7 @@
 - Possibility to save logs from console to file
 - Aliases
 
-![alt err](https://images91.fotosik.pl/308/f9589141fe60cd75.jpg)
+![alt err](https://images92.fotosik.pl/309/a654db0808a3f3d1.jpg)
 
 #### Tested on 2018.3.0f2
 
