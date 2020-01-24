@@ -12,6 +12,7 @@
 
 ![alt err](https://images92.fotosik.pl/309/a654db0808a3f3d1.jpg)
 
+#### Feel free to use this console in all your projects, commercial as well.
 #### Tested on 2018.3.0f2
 
 
