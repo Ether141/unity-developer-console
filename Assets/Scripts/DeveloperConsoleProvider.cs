@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System;
+using System.IO;
 
 namespace Developer
 {
@@ -31,6 +33,11 @@ namespace Developer
         [SerializeField] private Image tipBackground;
         [SerializeField] private TextMeshProUGUI tipUI;
 
+        [Header("Logs")]
+        [SerializeField] private bool autoSaveLogs = false;
+        [SerializeField] private string logsPath = "";
+                         private List<string> logs = new List<string>();
+
         private bool isOpened = false;
 
         private List<string> lastCommands = new List<string>();
@@ -49,6 +56,11 @@ namespace Developer
                 foreach (Alias alias in aliases)
                     tips.Add(alias.alias);
             }
+
+            if (!Directory.Exists(logsPath))
+                logsPath = Path.Combine(Application.dataPath, "developerconsolelogs.txt");
+            else
+                logsPath = Path.Combine(logsPath, "developerconsolelogs.txt");
         }
 
         private void Update()
@@ -87,6 +99,10 @@ namespace Developer
                 return;
 
             Print(c);
+
+            if (autoSaveLogs)
+                SaveLogs();
+
             lastCommands.Add(c.Trim());
             lastCommandIndex = lastCommands.Count;
 
@@ -269,6 +285,22 @@ namespace Developer
         }
 
         /// <summary>
+        /// Saves all logs from this console.
+        /// </summary>
+        public void SaveLogs ()
+        {
+            if (!Directory.Exists(logsPath))
+                logsPath = Path.Combine(Application.dataPath, "developerconsolelogs.txt");
+            else
+                logsPath = Path.Combine(logsPath, "developerconsolelogs.txt");
+
+            if (!File.Exists(logsPath))
+                File.WriteAllLines(logsPath, logs.ToArray());
+            else
+                File.AppendAllLines(logsPath, logs.ToArray());
+        }
+
+        /// <summary>
         /// Return true if given alias exists in aliases list.
         /// </summary>
         /// <param name="aliasToCheck"></param>
@@ -329,19 +361,31 @@ namespace Developer
         /// Prints given value.
         /// </summary>
         /// <param name="message"></param>
-        public void Print(string message) => buffer.text += "\n" + message;
+        public void Print(string message)
+        {
+            buffer.text += "\n" + message;
+            logs.Add(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + ": " + message);
+        }
 
         /// <summary>
         /// Prints given value as error.
         /// </summary>
         /// <param name="message"></param>
-        public void PrintError(string message) => buffer.text += $"\n<color=red>{message}</color>";
+        public void PrintError(string message)
+        {
+            buffer.text += $"\n<color=red>{message}</color>";
+            logs.Add(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + ": " + message);
+        }
 
         /// <summary>
         /// Prints given value as warning.
         /// </summary>
         /// <param name="message"></param>
-        public void PrintWarning(string message) => buffer.text += $"\n<color=yellow>{message}</color>";
+        public void PrintWarning(string message)
+        {
+            buffer.text += $"\n<color=yellow>{message}</color>";
+            logs.Add(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + ": " + message);
+        }
 
         /// <summary>
         /// Clears buffer.

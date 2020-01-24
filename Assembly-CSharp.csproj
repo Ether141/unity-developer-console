@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Modules\Echo.cs" />
     <Compile Include="Assets\Scripts\Modules\GetAliases.cs" />
     <Compile Include="Assets\Scripts\Modules\RemoveAlias.cs" />
+    <Compile Include="Assets\Scripts\Modules\SaveLogs.cs" />
     <Compile Include="Assets\Scripts\Modules\SetValue.cs" />
     <Compile Include="Assets\Scripts\Modules\SystemInfo.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
