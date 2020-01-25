@@ -615,7 +615,7 @@ MonoBehaviour:
     lineCount: 0
     pageCount: 0
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -946,7 +946,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -1239,7 +1239,7 @@ GameObject:
   - component: {fileID: 3862332703462539412}
   - component: {fileID: 3862332703462539415}
   m_Layer: 0
-  m_Name: SetValue1
+  m_Name: SetValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1271,11 +1271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba634555a290db4cba1224c626f7f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  command: 
-  arguments: 0
-  valueName: money
-  target: {fileID: 0}
-  valueType: 0
+  command: set
+  arguments: 2
+  values: []
 --- !u!1 &3862332703488828159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,7 +1632,7 @@ MonoBehaviour:
     lineCount: 0
     pageCount: 0
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}

@@ -15,14 +15,7 @@
 
             if(host.HasAlias(aliasName))
             {
-                result = "This alias has been already declared!";
-                return false;
-            }
-
-            if(host.HasCommand(commandName))
-            {
-                result = "Given command is not correct";
-                return false;
+                host.RemoveAlias(aliasName);
             }
 
             host.AddAlias(new Alias(aliasName, commandName));
